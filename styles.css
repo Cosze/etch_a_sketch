@@ -1,3 +1,19 @@
 *, *::before, *::after {
     box-sizing: border-box;
 }
+
+#main-container {
+    display: grid;
+    width: 900px;
+    height: 900px;
+    border: 1px solid red;
+}
+
+.grid-box {
+    border: 1px solid red;
+    background-color: transparent;
+}
+
+.colored {
+    background-color: black;
+}
