@@ -1,5 +1,14 @@
 (function() {
+    generateResetButton();
     generateGrid();
+
+    function generateResetButton() {
+        const resetButton = document.createElement('button');
+        resetButton.textContent = 'Reset';
+        resetButton.setAttribute('id', 'reset-button');
+        resetButton.addEventListener('click', resetGrid);
+        document.getElementById('app').appendChild(resetButton);
+    }
 
     // create grid with default resolution 16x16
     function generateGrid(x=16, y=16) {
@@ -25,6 +34,10 @@
     }
 
     // button to clear current grid
+    function resetGrid() {
+        document.getElementById('app').removeChild(document.getElementById('main-container'));
+        generateGrid();
+    }
     // button for user to set new grid resolution --- set max 100x100
     // optional color handling
 }())

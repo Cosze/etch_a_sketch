@@ -2,6 +2,12 @@
     box-sizing: border-box;
 }
 
+#reset-button {
+    position: absolute;
+    top: 1%;
+    right: 2%;
+}
+
 #main-container {
     display: grid;
     width: 900px;
