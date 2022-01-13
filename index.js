@@ -47,17 +47,39 @@
 
         // optional color handling
         function generateColor(ele) {
-            const currColor = ele.style.backgroundColor;
-            if (!currColor) {
+            const rgb = ele.style.backgroundColor;
+            if (!rgb) {
                 const randomHue = Math.floor(Math.random() * 361);
                 return `hsl(${randomHue}, 100%, 50%)`;
             }
-            // const darkenedColor = currColor.replace(/(\d)%\)$/, (_, val) => val > 0 ? val - 5 + '%)' : 0 + '%)');
-            const darkenedColor = darkenColor(currColor);
+            const darkenedColor = darkenColor(rgb);
             return darkenedColor;
         }
 
-        function darkenColor(currColor) {
-            console.log(currColor);
+        function darkenColor(rgb) {
+            const re = /(\d+)/g;
+            const match = rgb.match(re);
+            let [r, g, b] = match;
+            // source of following calculations: https://css-tricks.com/converting-color-spaces-in-javascript/
+            r /= 255;
+            g /= 255;
+            b /= 255;
+            let cmin = Math.min(r, g, b),
+                  cmax = Math.max(r, g, b),
+                  delta = cmax - cmin,
+                  h = 0,
+                  s = 0,
+                  l = 0;
+            if (delta == 0) h = 0;
+            else if (cmax == r) h = ((g - b) / delta) % 6;
+            else if (cmax == g) h = (b - r) / delta + 2;
+            else h = (r - g) / delta + 4;
+            h = Math.round(h * 60);
+            if (h < 0) h += 360;
+            l = (cmax + cmin) / 2;
+            s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+            s = +(s * 100).toFixed(1);
+            l = +(l * 100).toFixed(1);
+            return `hsl(${h}, ${s}%, ${l-5}%)`;
         }
     }())
