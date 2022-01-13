@@ -56,10 +56,20 @@
             return darkenedColor;
         }
 
-        function darkenColor(rgb) {
-            const re = /(\d+)/g;
-            const match = rgb.match(re);
-            let [r, g, b] = match;
+        function darkenColor(rgbString) {
+            const reForRGB = /(\d+)/g;
+            const [r, g, b] = rgbString.match(reForRGB);
+            const hsl = RGBtoHSL(r, g, b);
+            const reForLightness = /([\d\.]+)%\)$/;
+            const darkenHSL = (_, l) => {
+                if (+l < 5) return '0%)';
+                return +l - 5 + '%)';
+            }
+            const darkenedHSL = hsl.replace(reForLightness, darkenHSL);
+            return darkenedHSL;
+        }
+
+        function RGBtoHSL(r, g, b) {
             // source of following calculations: https://css-tricks.com/converting-color-spaces-in-javascript/
             r /= 255;
             g /= 255;
@@ -80,6 +90,6 @@
             s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
             s = +(s * 100).toFixed(1);
             l = +(l * 100).toFixed(1);
-            return `hsl(${h}, ${s}%, ${l-5}%)`;
+            return `hsl(${h}, ${s}%, ${l}%)`;
         }
     }())
