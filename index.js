@@ -30,7 +30,7 @@
         
         // color box on hover
         function draw(e) {
-            if (e.buttons) {
+            if (e.buttons === 1) {
                 const color = generateColor(e.target);
                 e.target.setAttribute('style', `background-color: ${color}`);
             }
