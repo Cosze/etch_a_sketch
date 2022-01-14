@@ -17,6 +17,7 @@
 
 .grid-box {
     background-color: transparent;
+    user-select: none;
 }
 
 .colored {

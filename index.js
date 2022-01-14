@@ -30,8 +30,10 @@
         
         // color box on hover
         function draw(e) {
-            const color = generateColor(e.target)
-            e.target.setAttribute('style', `background-color: ${color}`);
+            if (e.buttons) {
+                const color = generateColor(e.target);
+                e.target.setAttribute('style', `background-color: ${color}`);
+            }
         }
         
         // button to clear current grid
